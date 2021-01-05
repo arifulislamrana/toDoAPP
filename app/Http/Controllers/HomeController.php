@@ -1,21 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Repository\TaskRepository;
 
 class HomeController extends Controller
 {
+    private $taskRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TaskRepository $taskRepository)
     {
         $this->middleware('auth');
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -25,8 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userId = \Illuminate\Support\Facades\Auth::id();
-        $tasks = Task::where('user_id', $userId)->get();
+        $tasks = $this->taskRepository->getRecentTasksOfCurrentUser(3);
         return view('home', compact('tasks'));
     }
 }
