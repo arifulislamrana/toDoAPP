@@ -7,15 +7,12 @@
             <div class="card">
                 <div class="card-header">{{ __('Recent tasks') }}</div>
 
-                <div class="card-body">
+                <div class="card-body" style="background: {{ $settings['dashboard_color'] }}">
                     
-                        
                         @include('includes.tasks.list')
 
                         <br>
                         <a href="{{ route('task.all') }}">show all</a>
-
-                    
                 </div>
             </div>
         </div>

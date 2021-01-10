@@ -26,6 +26,12 @@
                     <br>
                     <span class="badge badge-success">{{ getTaskStatus($task)  }}</span> 
                     <br/>
+                    
+                    <span class="text-primary">
+                        Created By:
+                        <br/>
+                        {{ $task->user->name }}
+                    </span> <br/><br/>
 
                     <span class="text-primary">
                         Ends at:<br>

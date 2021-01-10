@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\SettingComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        View::composer('*', SettingComposer::class);
     }
 }

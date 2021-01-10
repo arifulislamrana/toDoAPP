@@ -44,24 +44,28 @@ class TaskController extends Controller{
 
     public function delete($id)
     {
+        $this->taskRepository->checkIfAuthorized($id);
         $this->taskRepository->deleteTaskById($id);
         return redirect()->back();
     }
 
     public function edit($id)
     {
+        $this->taskRepository->checkIfAuthorized($id);
         return view('tasks.edit',
          ['task'=>$this->taskRepository->getTaskById($id)]);
     }
 
     public function update($taskId, Request $request)
     {
+        
         $this->validate($request, [
             'name' => 'required|min:5|max:255',
             'description' => 'nullable|string',
             'end_time' => 'required|after:today'
         ]);
-
+        
+        $this->taskRepository->checkIfAuthorized($taskId);
         $task = $this->taskRepository->saveTask($taskId, $request->except('_token'));
 
         if ($task) {
@@ -74,6 +78,7 @@ class TaskController extends Controller{
 
     public function complete($taskId)
     {
+        $this->taskRepository->checkIfAuthorized($taskId);
         $task = $this->taskRepository->saveTask($taskId, [
             'status' => config('status.completed')
         ]);

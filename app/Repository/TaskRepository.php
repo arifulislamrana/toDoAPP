@@ -76,6 +76,14 @@ class TaskRepository{
 
         return Task::where('id', $id)->update($task);
     }
+
+    public function checkIfAuthorized($id)
+    {
+        $task = Task::where("id", $id)->first();
+        if ($task->user_id !== Auth::id()) {
+            throw new \Exception("You do not have access to modify this task");
+        }
+    }
 }
 
 ?>
